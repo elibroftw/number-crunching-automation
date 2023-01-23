@@ -146,10 +146,14 @@ def bond_yield(price, face_value, years_to_maturity, coupon=0):
     return (face_value / price) ** (1 / years_to_maturity) - 1
 
 
-def pv_bond(face_value, coupon, years_to_maturity, market_yield, pmts_per_year):
-    """ market_yield: [0, 1]"""
-    pv_baloon = face_value / (1 + market_yield / pmts_per_year) ** (2 * years_to_maturity)
-    return (coupon / pmts_per_year) * (1 - (1 + market_yield / pmts_per_year) ** (-years_to_maturity * pmts_per_year)) / (market_yield / pmts_per_year) + pv_baloon
+def pv_bond(face_value, coupon, years_to_maturity, market_yield, pmts_per_year=2):
+    """
+    market_yield: [0, 1]
+    coupon: coupon_rate * face_value
+    The PV of the bond is the PV of the coupon annuity plus the PV of the face value paid at maturity
+    """
+    pv_balloon = face_value / (1 + market_yield / pmts_per_year) ** (2 * years_to_maturity)
+    return (coupon / pmts_per_year) * (1 - (1 + market_yield / pmts_per_year) ** (-years_to_maturity * pmts_per_year)) / (market_yield / pmts_per_year) + pv_balloon
 
 
 def monthly_savings(future_savings, years_to_retirement, interest_rate, compounds_per_year=2, startwith=0):
