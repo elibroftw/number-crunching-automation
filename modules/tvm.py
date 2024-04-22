@@ -135,12 +135,13 @@ def effir(interest_rate, compounds):
     return (1 + interest_rate / compounds) ** compounds - 1
 
 
-def mortgage_pmt(principal, interest_rate, amortization_years, payments_per_year=2):
+def mortgage_pmt(principal, interest_rate, amortization_years, payments_per_year=12):
     """
     Calculates the monthly payment needed for a mortgage
     """
     r = effir(interest_rate, 2)  # Bank Act Canada
     i = eir_to_rate(r, payments_per_year)
+    print(interest_rate, r, payments_per_year)
     return principal / pvifa(i, amortization_years * payments_per_year)
 
 
@@ -468,7 +469,7 @@ def main():
         "amortization_years", type=int, help="Amortization years"
     )
     mortgage_pmt_parser.add_argument(
-        "--payments_per_year", type=int, default=2, help="Number of payments per year"
+        "--payments_per_year", type=int, default=12, help="Number of payments per year"
     )
 
     # bond_yield
