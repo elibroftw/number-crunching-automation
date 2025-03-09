@@ -5,7 +5,7 @@ Molar Mass Calculator
 Author: Elijah Lopez
 Version: 1.2.1
 Last Updated: April 4th 2020
-Created: July 8th 2020
+Created: July 8th 2017
 Python Version: 3.6+
 =================================
 """
