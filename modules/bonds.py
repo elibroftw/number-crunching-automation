@@ -23,6 +23,15 @@ eay = effective_annual_yield
 
 def coupon_bond_price(period_discount_rate, years, coupon_rate, coupon_freq, par_value=1000):
     # period discount_rate: AKA effective compound rate; T-bill yield; zero-coupon bond yield
+    # period_discount_rate is not the yield to maturity
+    # Alternative:
+    #   pv_balloon = face_value / (1 + market_yield / coupon_freq) ** (2 * years_to_maturity)
+    #   return (coupon / coupon_freq) * (1 - (1 + market_yield / coupon_freq) ** (-years_to_maturity * coupon_freq)) / (market_yield / coupon_freq) + pv_balloon
+    return npf.pv(period_discount_rate, years * coupon_freq, -par_value * coupon_rate / coupon_freq, -par_value)
+
+def coupon_bond_price(ytm, years, coupon_rate, coupon_freq, par_value=1000):
+    # period discount_rate: AKA effective compound rate; T-bill yield; zero-coupon bond yield
+    # period_discount_rate is not the yield to maturity
     # Alternative:
     #   pv_balloon = face_value / (1 + market_yield / coupon_freq) ** (2 * years_to_maturity)
     #   return (coupon / coupon_freq) * (1 - (1 + market_yield / coupon_freq) ** (-years_to_maturity * coupon_freq)) / (market_yield / coupon_freq) + pv_balloon
